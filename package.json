@@ -1,0 +1,19 @@
+{
+  "name": "reservedbot",
+  "version": "1.0.0",
+  "description": "tbc",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "private"
+  },
+  "keywords": [
+    "sneaker",
+    "bot"
+  ],
+  "author": "Nicholas Anthony, Jonah Cirillo, and Devon Caron",
+  "license": "Apache-2.0"
+}
