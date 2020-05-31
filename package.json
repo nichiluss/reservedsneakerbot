@@ -2,15 +2,16 @@
   "name": "reservedbot",
   "version": "1.0.0",
   "dependencies": {
+    "electron": "^9.0.0",
+    "mouse-helper": "1.0.5",
     "puppeteer": "^3.1.0",
     "puppeteer-extra": "3.1.9",
-    "puppeteer-extra-plugin-stealth": "2.4.9",
-    "mouse-helper": "1.0.5",
-    "electron": "9.0.0"
+    "puppeteer-extra-plugin-stealth": "2.4.9"
   },
   "description": "tbc",
-  "main": "index.js",
+  "main": "./main.js",
   "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "electron ."
   },
   "repository": {
