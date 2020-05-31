@@ -30,6 +30,7 @@ async function initiate() {
     // Opens new tab
     const page = await browser.newPage();
 
+    page.setDefaultTimeout(60000);
     // Navigates to Supreme
     await page.goto('https://www.supremenewyork.com/shop/accessories/w4xp3nrj2/mt26hz7la');
     page.waitForNavigation({ waitUntil: 'networkidle0'});
