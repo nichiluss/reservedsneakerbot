@@ -82,8 +82,8 @@ async function initiate() {
     page.waitFor(50);
     await page.click('#order_terms.checkbox');
     page.waitFor(50);
-    await page.click('input.button')
-    page.waitForSelector('.failed', { visible:true})
+    await page.click('input.button');
+    page.waitForSelector('.failed', { visible:true })
         .then(() => console.log("Failed!"))
         .then(() => page.waitFor(1500))
         .then(() => browser.close());
