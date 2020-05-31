@@ -5,6 +5,18 @@
 // Initializes puppeteer
 const puppeteer = require('puppeteer');
 const name = "Nicholas Anthony";
+const email = "nichilusa@gmail.com";
+const tel = "415-310-3874";
+const address = "398 Eliseo Drive";
+const zip = "94904";
+const city = "Greenbrae";
+const state = "CA";
+const country = "USA";
+const card = "1234123412341234";
+const expMonth = "01";
+const expYear = "2023";
+const cvv = "123";
+
 // Function that runs the auto selector
 async function initiate() {
 
@@ -44,6 +56,29 @@ async function initiate() {
     
     //Autofills user data
     await page.type('#order_billing_name', name);
-    
+    page.waitFor(50);
+    await page.type('#order_email', email);
+    page.waitFor(50);
+    await page.type('#order_tel', tel);
+    page.waitFor(500);
+    await page.type('#bo.string.required', address);
+    page.waitFor(500);
+    await page.type('#order_billing_zip', zip);
+    page.waitFor(50);
+    await page.type('#order_billing_city', city);
+    page.waitFor(50);
+    await page.select('select#order_billing_state', state);
+    page.waitFor(50);
+    await page.select('select#order_billing_country', country);
+    page.waitFor(50);
+    await page.type('#rnsnckrn.string.required', card);
+    page.waitFor(50);
+    await page.select('select#credit_card_month', expMonth);
+    page.waitFor(50);
+    await page.select('select#credit_card_year', expYear);
+    page.waitFor(50);
+    await page.type('#orcer.string.required', cvv);
+    page.waitFor(50);
+    await page.click('input.button')
 }
     initiate();
