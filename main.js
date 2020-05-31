@@ -5,8 +5,14 @@ function createWindow () {
         width: 1190,
         height: 720,
         webPreferences: {
-            nodeIntegration: true
-        }
+            nodeIntegration: true,
+            devtools: false,
+
+    },
+    fullscreenable: false,
+    hasShadow: false,
+    maximizable: false,
+    frame: false
     })
 
     //Loads the GUI 
