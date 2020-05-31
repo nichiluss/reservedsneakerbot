@@ -4,7 +4,7 @@
 
 // Initializes puppeteer
 const puppeteer = require('puppeteer');
-
+const name = "Nicholas Anthony";
 // Function that runs the auto selector
 async function initiate() {
 
@@ -35,8 +35,15 @@ async function initiate() {
     await page.waitFor(1500);
 
     // Clicks check-out button
-    await page.waitForSelector('a.button.checkout')
-    await page.click('a.button.checkout')
+    await page.waitForSelector('a.button.checkout');
+    await page.click('a.button.checkout');
 
+    //Waits for checkout page to load
+    page.waitForNavigation({ waitUntil: 'networkidle0'});
+    page.waitFor(1500);
+    
+    //Autofills user data
+    await page.type('#order_billing_name', name);
+    
 }
     initiate();
