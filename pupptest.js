@@ -8,7 +8,7 @@ async function initiate() {
     });
     const page = await browser.newPage();
 
-    await page.goTo('www.soundcloud.com/')
+    await page.goto('www.soundcloud.com/')
     page.waitForNavigation({ waitUntil: 'networkidle0'});
 }
     initiate();
