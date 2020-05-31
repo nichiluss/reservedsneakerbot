@@ -6,3 +6,5 @@ async function initiate() {
         headless: false
     });
 }
+
+initiate();
