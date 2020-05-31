@@ -14,5 +14,6 @@ async function initiate() {
 
     await page.select('select#s','75628');
     await page.select('select#qty', '6');
+    await page.click('a.button.continue')
 }
     initiate();
