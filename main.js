@@ -7,14 +7,13 @@ function createWindow () {
         webPreferences: {
             nodeIntegration: true,
             devtools: false,
-
     },
     fullscreenable: false,
     hasShadow: false,
     maximizable: false,
-    frame: false
+    frame: false,
+    resizable: false
     })
-
     //Loads the GUI 
     win.loadFile('task.html');
     //Removes navigation bar
