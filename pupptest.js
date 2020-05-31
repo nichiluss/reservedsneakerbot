@@ -3,8 +3,9 @@ const puppeteer = require('puppeteer');
 async function initiate() {
 
     const browser = await puppeteer.launch({
-    headless: false,
-    ignoreHTTPSErrors: true
+        headless: false,
+        ignoreHTTPSErrors: true,
+        defaultViewport: null
     });
     const page = await browser.newPage();
 
