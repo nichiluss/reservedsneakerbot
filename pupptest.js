@@ -12,10 +12,10 @@ const zip = "94904";
 const city = "Greenbrae";
 const state = "CA";
 const country = "USA";
-const card = "1234123412341234";
-const expMonth = "01";
-const expYear = "2023";
-const cvv = "123";
+const card = "5313 6729 0339 4630";
+const expMonth = "05";
+const expYear = "2026";
+const cvv = "042";
 
 // Function that runs the auto selector
 async function initiate() {
@@ -30,7 +30,7 @@ async function initiate() {
     // Opens new tab
     const page = await browser.newPage();
 
-    page.setDefaultTimeout(60000);
+    page.setDefaultTimeout(1800000);
     // Navigates to Supreme
     await page.goto('https://www.supremenewyork.com/shop/accessories/w4xp3nrj2/mt26hz7la');
     page.waitForNavigation({ waitUntil: 'networkidle0'});
@@ -83,6 +83,11 @@ async function initiate() {
     await page.click('#order_terms.checkbox');
     page.waitFor(50);
     await page.click('input.button')
-    page.waitForNavigation({ waitUntil: 'networkidle0'})
+    page.waitForSelector('.failed', { visible:true})
+        .then(() => console.log("Failed!"))
+        .then(() => page.waitFor(1500))
+        .then(() => browser.close());
+    
+    
 }
     initiate();
