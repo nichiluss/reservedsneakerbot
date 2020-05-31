@@ -2,15 +2,15 @@ const { app, BrowserWindow } = require('electron');
 
 function createWindow () {
     const win = new BrowserWindow({
-        width: 1200,
-        height: 900,
+        width: 1280,
+        height: 720,
         webPreferences: {
             nodeIntegration: true
         }
     })
 
     //Loads the GUI 
-    win.loadFile('index.html');
+    win.loadFile('task.html');
     //Removes navigation bar
     win.removeMenu();
     //Open DevTools
