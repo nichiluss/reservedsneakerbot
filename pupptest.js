@@ -1,7 +1,4 @@
 const puppeteer = require('puppeteer');
-const jsonFile = require('jsonfile');
-
-
 
 async function initiate() {
 
