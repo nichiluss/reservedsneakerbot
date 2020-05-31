@@ -52,7 +52,7 @@ async function initiate() {
 
     //Waits for checkout page to load
     page.waitForNavigation({ waitUntil: 'networkidle0'});
-    page.waitFor(1500);
+    page.waitFor(4500);
     
     //Autofills user data
     await page.type('#order_billing_name', name);
