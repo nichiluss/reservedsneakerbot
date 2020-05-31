@@ -79,6 +79,9 @@ async function initiate() {
     page.waitFor(50);
     await page.type('#orcer.string.required', cvv);
     page.waitFor(50);
+    await page.click('#order_terms.checkbox');
+    page.waitFor(50);
     await page.click('input.button')
+    page.waitForNavigation({ waitUntil: 'networkidle0'})
 }
     initiate();
