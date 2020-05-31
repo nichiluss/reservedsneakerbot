@@ -10,7 +10,7 @@
     "electron": "9.0.0"
   },
   "description": "tbc",
-  "main": "index.js",
+  "main": "main.js",
   "scripts": {
     "start": "electron ."
   },
