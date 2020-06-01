@@ -17,9 +17,10 @@ const expMonth = "05";
 const expYear = "2026";
 const cvv = "042";
 const itemType = "accessories";
-const qty = "1";
-const itemSize = "X-Large";
-const keywords = "Hanes";
+const itemSubType = "shoe";
+const qty = "4";
+const itemSize = "M";
+const keywords = "Tagless Tees";
 
 // Function that runs the auto selector
 async function initiate() {
@@ -55,7 +56,7 @@ async function initiate() {
 
           if (linkString.includes(keyword)) {
             console.log("Item found");
-            page.goto(link);
+           await page.goto(link);
             break;
          }
         }
@@ -63,39 +64,113 @@ async function initiate() {
       }
     
     findLink(page, keywords);
-    if (itemType == "shoe") {
-        const option = (await page.$x(`//*[@id = "s"]/option[text() = ${itemSize}]`))[0];
-        const value = await (await option.getProperty('value')).jsonValue();
-        await page.select('select#s', value);
+
+    page.waitForNavigation({ waitUntil: 'networkidle0'});
+    await page.waitFor(1500);
+
+    if (itemSubType == "shoe") {
+        if (itemSize == 'S') {
+            const option = (await page.$x('//*[@id = "s"]/option[text() = "Small"]'))[0];
+            const value = await (await option.getProperty('value')).jsonValue();
+            await page.select('select#s', value);
+            await page.select('select#qty', qty);
+            await page.click('input.button');
+        }
+        else if (itemSize == 'M') {
+            const option = (await page.$x('//*[@id = "s"]/option[text() = "Medium"]'))[0];
+            const value = await (await option.getProperty('value')).jsonValue();
+            await page.select('select#s', value);
+            await page.select('select#qty', qty);
+            await page.click('input.button');
+        }
+        else if (itemSize == 'L') {
+            const option = (await page.$x('//*[@id = "s"]/option[text() = "Large"]'))[0];
+            const value = await (await option.getProperty('value')).jsonValue();
+            await page.select('select#s', value);
+            await page.select('select#qty', qty);
+            await page.click('input.button');
+        }        
+        else if (itemSize == 'XL') {
+            const option = (await page.$x('//*[@id = "s"]/option[text() = "XLarge"]'))[0];
+            const value = await (await option.getProperty('value')).jsonValue();
+            await page.select('select#s', value);
+            await page.select('select#qty', qty);
+            await page.click('input.button');
+        }
+    }
+
+    if (itemSubType == "wear") {        
+        if (itemSize == 'S') {
+            const option = (await page.$x('//*[@id = "s"]/option[text() = "Small"]'))[0];
+            const value = await (await option.getProperty('value')).jsonValue();
+            await page.select('select#s', value);
+            await page.select('select#qty', qty);
+            await page.click('input.button');
+        }
+        else if (itemSize == 'M') {
+            const option = (await page.$x('//*[@id = "s"]/option[text() = "Medium"]'))[0];
+            const value = await (await option.getProperty('value')).jsonValue();
+            await page.select('select#s', value);
+            await page.select('select#qty', qty);
+            await page.click('input.button');
+         }
+        else if (itemSize == 'L') {
+            const option = (await page.$x('//*[@id = "s"]/option[text() = "Large"]'))[0];
+            const value = await (await option.getProperty('value')).jsonValue();
+            await page.select('select#s', value);
+            await page.select('select#qty', qty);
+            await page.click('input.button');
+        }
+        else if (itemSize == 'XL') {
+            const option = (await page.$x('//*[@id = "s"]/option[text() = "XLarge"]'))[0];
+            const value = await (await option.getProperty('value')).jsonValue();
+            await page.select('select#s', value);
+            await page.select('select#qty', qty);
+            await page.click('input.button');
+        }
+    }
+
+    if (itemSubType == "misc") {
         await page.click('input.button');
     }
 
-    if (itemType == "wear") {        
-        const option = (await page.$x(`//*[@id = "s"]/option[text() = ${itemSize}]`))[0];
-        const value = await (await option.getProperty('value')).jsonValue();
-        await page.select('select#s', value);
-        await page.click('input.button');
-    }
-    
-
-    if (itemType == "misc") {
-        await page.click('input.button');
-    }
-
-    if (itemType == "miscWithQuantity") {
+    if (itemSubType == "miscWithQuantity") {
         await page.select('select#qty', qty);
         await page.click('input.button');
     }
 
-    if (itemType == "miscWithSizeAndQuantity") {
-        const option = (await page.$x(`//*[@id = "s"]/option[text() = ${itemSize}]`))[0];
-        const value = await (await option.getProperty('value')).jsonValue();
-        await page.select('select#s', value);
-        await page.select('select#qty', qty);
-        await page.click('input.button');
+    if (itemSubType == "miscWithSizeAndQuantity") {
+        if (itemSize == 'S') {
+            const option = (await page.$x('//*[@id = "s"]/option[text() = "Small"]'))[0];
+            const value = await (await option.getProperty('value')).jsonValue();
+            await page.select('select#s', value);
+            await page.select('select#qty', qty);
+            await page.click('input.button');
+        }
+        else if (itemSize == 'M') {
+            const option = (await page.$x('//*[@id = "s"]/option[text() = "Medium"]'))[0];
+            const value = await (await option.getProperty('value')).jsonValue();
+            await page.select('select#s', value);
+            await page.select('select#qty', qty);
+            await page.click('input.button');
+         }
+        else if (itemSize == 'L') {
+            const option = (await page.$x('//*[@id = "s"]/option[text() = "Large"]'))[0];
+            const value = await (await option.getProperty('value')).jsonValue();
+            await page.select('select#s', value);
+            await page.select('select#qty', qty);
+            await page.click('input.button');
+        }        
+        else if (itemSize == 'XL') {
+            const option = (await page.$x('//*[@id = "s"]/option[text() = "XLarge"]'))[0];
+            const value = await (await option.getProperty('value')).jsonValue();
+            await page.select('select#s', value);
+            await page.select('select#qty', qty);
+            await page.click('input.button');
+        }
     }
     // User input to prevent bot detection
-    await page.waitFor(1500);
+    await page.waitFor(3000);
 
     // Clicks check-out button
     await page.waitForSelector('a.button.checkout');
