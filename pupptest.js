@@ -16,6 +16,8 @@ const card = "5313 6729 0339 4630";
 const expMonth = "05";
 const expYear = "2026";
 const cvv = "042";
+const itemType = "miscWithSizeAndQuantity";
+const qty = "1";
 
 // Function that runs the auto selector
 async function initiate() {
@@ -31,19 +33,35 @@ async function initiate() {
     const page = await browser.newPage();
 
     page.setDefaultTimeout(1800000);
+    
     // Navigates to Supreme
     await page.goto('https://www.supremenewyork.com/shop/accessories/w4xp3nrj2/mt26hz7la');
     page.waitForNavigation({ waitUntil: 'networkidle0'});
 
-    // Selects XL option from size dropdown
-    await page.select('select#s','75628');
+    if (itemType == "shoe") {
+        await page.select('select#s', "9.5");
+        await page.click('input.button');
+    }
 
-    // Selects the quantity 6 for quantity dropdown
-    await page.select('select#qty', '6');
+    if (itemType == "wear") {
+        await page.select('select#s', "79207");
+        await page.click('input.button');
+    }
 
-    // Clicks "add to cart" button
-    await page.click('input.button');
+    if (itemType == "misc") {
+        await page.click('input.button');
+    }
 
+    if (itemType == "miscWithQuanitity") {
+        await page.select('select#qty', qty);
+        await page.click('input.button');
+    }
+
+    if (itemType == "miscWithSizeAndQuanitity") {
+        await page.select('select#s', '79207');
+        await page.select('select#qty', qty);
+        await page.click('input.button');
+    }
     // User input to prevent bot detection
     await page.waitFor(1500);
 
@@ -87,7 +105,6 @@ async function initiate() {
         .then(() => console.log("Failed!"))
         .then(() => page.waitFor(1500))
         .then(() => browser.close());
-    
     
 }
     initiate();
