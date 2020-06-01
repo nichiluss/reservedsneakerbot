@@ -51,6 +51,7 @@ async function initiate() {
         await page.select('select#s', value);
         await page.click('input.button');
     }
+    
 
     if (itemType == "misc") {
         await page.click('input.button');
