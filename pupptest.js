@@ -4,27 +4,54 @@
 
 // Initializes puppeteer
 const puppeteer = require('puppeteer');
-const name = "Nicholas Anthony";
-const email = "nichilusa@gmail.com";
-const tel = "415-310-3874";
-const address = "398 Eliseo Drive";
-const zip = "94904";
-const city = "Greenbrae";
-const state = "CA";
-const country = "USA";
-const card = "5313 6729 0339 4630";
-const expMonth = "05";
-const expYear = "2026";
-const cvv = "042";
-const itemType = "shirts";
+const fs = require('fs');
+
+let name = "";
+let email = "";
+let tel = "";
+let address = "";
+let zip = "";
+let city = "";
+let state = "";
+let country = "";
+let card = "";
+let expMonth = "";
+let expYear = "";
+let cvv = "";
+const itemType = "accessories";
 const itemSubType = "wear";
 const qty = "1";
-const itemSize = "XL";
-const keywords = "Silk";
+const itemSize = "L";
+const keywords = "Hanes";
 
 // Function that runs the auto selector
-async function initiate() {
+function fetchData(profName) {
+    let rawProfileText = fs.readFile(`./profiles/${profName}.pf`, 'utf8', function read(err, data) {
+        if (err) throw err;
 
+        const content = data;
+        let rawSplitData = content.split("\n");
+        name = rawSplitData[0];
+        email = rawSplitData[1];
+        tel = rawSplitData[2];
+        address = rawSplitData[3];
+        zip = rawSplitData[4];
+        city = rawSplitData[5];
+        state = rawSplitData[6];
+        country = rawSplitData[7];
+        card = rawSplitData[8];
+        expMonth = rawSplitData[9];
+        expYear = rawSplitData[10];
+        cvv = rawSplitData[11];
+
+        console.log(rawSplitData);
+
+
+    });
+    console.log(rawProfileText);
+}
+async function initiate() {
+    fetchData("testProfile");
     try {
         // Launches the browser
         const browser = await puppeteer.launch({
@@ -171,7 +198,7 @@ async function initiate() {
             }
         }
         // User input to prevent bot detection
-        await page.waitFor(3000);
+        await page.waitFor(4500);
 
         // Clicks check-out button
         await page.waitForSelector('a.button.checkout');
@@ -194,20 +221,20 @@ async function initiate() {
         page.waitFor(50);
         await page.type('#order_billing_city', city);
         page.waitFor(50);
-        await page.select('select#order_billing_state', state);
-        page.waitFor(50);
-        await page.select('select#order_billing_country', country);
+        await page.type('#order_billing_state', state);
+        page.waitFor(100);
+        await page.type('#order_billing_country', country);
         page.waitFor(50);
         await page.type('#rnsnckrn.string.required', card);
         page.waitFor(50);
-        await page.select('select#credit_card_month', expMonth);
+        await page.type('#credit_card_month', expMonth);
         page.waitFor(50);
-        await page.select('select#credit_card_year', expYear);
+        await page.type('#credit_card_year', expYear);
         page.waitFor(50);
         await page.type('#orcer.string.required', cvv);
         page.waitFor(50);
         await page.click('#order_terms.checkbox');
-        page.waitFor(50);
+        page.waitFor(5000);
         await page.click('input.button');
         page.waitForSelector('.failed', { visible:true })
             .then(() => console.log("Failed!"))
