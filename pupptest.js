@@ -19,7 +19,7 @@ const cvv = "042";
 const itemType = "accessories";
 const qty = "1";
 const itemSize = "X-Large";
-const keywords = "Hanes";
+const keywords = "Hane's";
 
 // Function that runs the auto selector
 async function initiate() {
@@ -44,12 +44,13 @@ async function initiate() {
     async function findLink(page, linkString) {
         const links = await page.$$('a')
         for (var i=0; i < links.length; i++) {
-          let handle = await links[i].getProperty('innerText');
-          let linkText = await handle.jsonValue();
-          const text = getText(linkText);
-          if (text.contains(linkString)) {
+          let valueHandle = await links[i].getProperty('innerText');
+          let linkText = await valueHandle.jsonValue();
+          const text = linkText.toString();
+          if (text.includes(linkString)) {
             console.log("Item found");
             page.click(links[i]);
+            break;
           }
         }
         return null;
