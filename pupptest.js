@@ -214,4 +214,3 @@ async function initiate() {
         .then(() => browser.close());
     
 }
-    initiate();
