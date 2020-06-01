@@ -1,8 +1,14 @@
 const { app, BrowserWindow } = require('electron');
 
+const nativeImage = require('electron').nativeImage;
+    var image = nativeImage.createFromPath(__dirname + '/images/logo.png'); 
+ // where public folder on the root dir
+
+    image.setTemplateImage(true);
+
 function createWindow () {
     const win = new BrowserWindow({
-        width: 1190,
+        width: 1175,
         height: 720,
         webPreferences: {
             nodeIntegration: true,
@@ -12,7 +18,8 @@ function createWindow () {
     hasShadow: false,
     maximizable: false,
     frame: true,
-    resizable: false
+    resizable: false,
+    icon: image,
     })
     //Loads the GUI 
     win.loadFile('task.html');
