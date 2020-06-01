@@ -16,7 +16,7 @@ const card = "5313 6729 0339 4630";
 const expMonth = "05";
 const expYear = "2026";
 const cvv = "042";
-const itemType = "miscWithSizeAndQuantity";
+const itemType = "wear";
 const qty = "1";
 
 // Function that runs the auto selector
@@ -39,12 +39,16 @@ async function initiate() {
     page.waitForNavigation({ waitUntil: 'networkidle0'});
 
     if (itemType == "shoe") {
-        await page.select('select#s', "9.5");
+        const option = (await page.$x('//*[@id = "s"]/option[text() = "XLarge"]'))[0];
+        const value = await (await option.getProperty('value')).jsonValue();
+        await page.select('select#s', value);
         await page.click('input.button');
     }
 
-    if (itemType == "wear") {
-        await page.select('select#s', "79207");
+    if (itemType == "wear") {        
+        const option = (await page.$x('//*[@id = "s"]/option[text() = "XLarge"]'))[0];
+        const value = await (await option.getProperty('value')).jsonValue();
+        await page.select('select#s', value);
         await page.click('input.button');
     }
 
@@ -52,13 +56,15 @@ async function initiate() {
         await page.click('input.button');
     }
 
-    if (itemType == "miscWithQuanitity") {
+    if (itemType == "miscWithQuantity") {
         await page.select('select#qty', qty);
         await page.click('input.button');
     }
 
-    if (itemType == "miscWithSizeAndQuanitity") {
-        await page.select('select#s', '79207');
+    if (itemType == "miscWithSizeAndQuantity") {
+        const option = (await page.$x('//*[@id = "s"]/option[text() = "XLarge"]'))[0];
+        const value = await (await option.getProperty('value')).jsonValue();
+        await page.select('select#s', value);
         await page.select('select#qty', qty);
         await page.click('input.button');
     }
