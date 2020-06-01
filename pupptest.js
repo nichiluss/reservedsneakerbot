@@ -16,9 +16,10 @@ const card = "5313 6729 0339 4630";
 const expMonth = "05";
 const expYear = "2026";
 const cvv = "042";
-const itemType = "wear";
+const itemType = "accessories";
 const qty = "1";
 const itemSize = "X-Large";
+const keywords = "Hanes";
 
 // Function that runs the auto selector
 async function initiate() {
@@ -35,10 +36,26 @@ async function initiate() {
 
     page.setDefaultTimeout(1800000);
     
-    // Navigates to Supreme
-    await page.goto('https://www.supremenewyork.com/shop/accessories/w4xp3nrj2/mt26hz7la');
+    // Navigates to shop page that is indicated by the item type provided by the user
+    await page.goto(`https://www.supremenewyork.com/shop/all/${itemType}`);
     page.waitForNavigation({ waitUntil: 'networkidle0'});
-
+    
+    //Checks page for link text that matches keywords and clicks on it
+    async function findLink(page, linkString) {
+        const links = await page.$$('a')
+        for (var i=0; i < links.length; i++) {
+          let handle = await links[i].getProperty('innerText');
+          let linkText = await handle.jsonValue();
+          const text = getText(linkText);
+          if (text.contains(linkString)) {
+            console.log("Item found");
+            page.click(links[i]);
+          }
+        }
+        return null;
+      }
+    
+    findLink(page, keywords);
     if (itemType == "shoe") {
         const option = (await page.$x(`//*[@id = "s"]/option[text() = ${itemSize}]`))[0];
         const value = await (await option.getProperty('value')).jsonValue();
