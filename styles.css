@@ -1,31 +1,4 @@
 
-body, html {
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  padding: 0;
-}
-
-.app-container {
-  width: 100%;
-  height: 100%;
-}
-
-.title-bar {
-  width: 100%;
-  height: 3%;
-  background-color: #303030;
-}
-
-
-
-
-
-
-
-
-
-
 Body {
 Background-color: pink;
 }
@@ -46,10 +19,10 @@ ul {
     display: block;
     color: pink;
     text-align: center;
-    padding: 14px 16px;
+    padding: 20px 16px;
     text-decoration: none;
-    margin-right: 75px;
-    margin-left: 75px;
+    margin-right: 70px;
+    margin-left: 70px;
   }
   
   li a:hover {
