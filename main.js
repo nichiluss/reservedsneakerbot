@@ -11,7 +11,7 @@ function createWindow () {
     fullscreenable: false,
     hasShadow: false,
     maximizable: false,
-    frame: false,
+    frame: true,
     resizable: false
     })
     //Loads the GUI 
