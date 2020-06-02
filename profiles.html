@@ -37,17 +37,105 @@
   <br />
   <br />
   </p>
-  
-  <p>Shipping/Billing Info</p>
-  <p>Name (Short Answer)</p>
-  <p>Email (Short Answer)</p>
-  <p>Phone Number (Short Answer)</p>
-  <p>Address 1 (Short Answer)</p>
-  <p>Address 2 (Short Answer)</p>
-  <p>State (Short Answer)</p>
-  <p>City (Short Answer)</p>
-  <P>Postal Code (Short Answer)<br /><br /></P>
+  <script type="text/javascript">
 
+  
+  
+  
+  </script>
+  <p>Shipping/Billing Info</p>
+<form onsubmit="saveProfile()">
+  <div class="group">
+    <input spellcheck="false" id="name" type="text" required>
+    <span class="highlight"></span>
+    <span class="bar"></span>
+    <label>Name*</label>
+  </div>
+
+  <div class="group">
+    <input spellcheck="false" id="email" type="text" required>
+    <span class="highlight"></span>
+    <span class="bar"></span>
+    <label>Email*</label>
+  </div>
+
+  <div class="group">
+    <input spellcheck="false" id="phone-number" type="text" required>
+    <span class="highlight"></span>
+    <span class="bar"></span> 
+    <label>Phone Number*</label>
+  </div>
+
+  <div class="group">
+    <input spellcheck="false" id="address" type="text" required>
+    <span class="highlight"></span>
+    <span class="bar"></span>
+    <label>Address*</label>
+  </div>
+
+  <div class="group">
+    <input spellcheck="false" id="zip" type="text" maxlength="5" size="5" required>
+    <span class="highlight"></span>
+    <span class="bar"></span>
+    <label>Zip Code*</label>
+  </div>
+
+  <div class="group">
+    <input spellcheck="false" id="city" type="text" required>
+    <span class="highlight"></span>
+    <span class="bar"></span>
+    <label>City*</label>
+  </div>
+
+  <div class="group">
+    <input spellcheck="false" id="state" type="text" required>
+    <span class="highlight"></span>
+    <span class="bar"></span>
+    <label>State*</label>
+  </div>
+
+  <div class="group">
+    <input spellcheck="false" id="card" type="text" maxlength= "12" size="12" required>
+    <span class="highlight"></span>
+    <span class="bar"></span>
+    <label>Card Number*</label>
+  </div>
+
+  <select name = 'Expiration Date' id='expDate'>
+    <option value = '01'>01</option>
+    <option value = '02'>02</option>
+    <option value = '03'>03</option>
+    <option value = '04'>04</option>
+    <option value = '05'>05</option>
+    <option value = '06'>06</option>
+    <option value = '07'>07</option>
+    <option value = '08'>08</option>
+    <option value = '09'>09</option>
+    <option value = '10'>10</option>
+    <option value = '11'>11</option>
+    <option value = '12'>12</option>
+    <label>Expiration Month</label>
+  </select>
+
+  <select name = 'Expiration Year' id='expYear'>
+    <option value = '2020'>2020</option>
+    <option value = '2021'>2021</option>
+    <option value = '2022'>2022</option>
+    <option value = '2023'>2023</option>
+    <option value = '2024'>2024</option>
+    <option value = '2025'>2025</option>
+    <option value = '2026'>2026</option>
+    <label>Expiration Year</label>
+  </select>
+
+  <div class="group">
+    <input spellcheck="false" id="card" type="text" maxlength="3" size="3"required>
+    <span class="highlight"></span>
+    <span class="bar"></span>
+    <label>CVV*</label>
+  </div>
+  <input type="submit" value="Save Profile">
+</form>
   <p>Payment Info</p>
   <p>Card Type (DropDown Menu)</p>
   <p>Card Number (Short Answer)</p>
@@ -57,5 +145,6 @@
   <p>Profile Name (Short Answer)</p>
   <p>Save Profile Button (Saves and puts into the Profiles List)</p>
 
+  
   </body>
 </html>

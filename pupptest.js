@@ -15,6 +15,7 @@ let city = "";
 let state = "";
 let country = "";
 let card = "";
+let rawCard = ";"
 let expMonth = "";
 let expYear = "";
 let cvv = "";
@@ -23,6 +24,12 @@ const itemSubType = "wear";
 const qty = "1";
 const itemSize = "L";
 const keywords = "Hanes";
+
+//Formatting function for the telephone number
+function addDashes(f) {
+    f_val = f.value.replace(/\D[^\.]/g, "");
+    f.value = f_val.slice(0,3)+"-"+f_val.slice(3,6)+"-"+f_val.slice(6);
+}
 
 // Function that runs the auto selector
 function fetchData(profName) {
@@ -33,16 +40,18 @@ function fetchData(profName) {
         let rawSplitData = content.split("\n");
         name = rawSplitData[0];
         email = rawSplitData[1];
-        tel = rawSplitData[2];
+        tel = rawSplitData[2].replace(/[^0-9]/g, "");
+        addDashes(tel);
         address = rawSplitData[3];
         zip = rawSplitData[4];
         city = rawSplitData[5];
         state = rawSplitData[6];
-        country = rawSplitData[7];
-        card = rawSplitData[8];
-        expMonth = rawSplitData[9];
-        expYear = rawSplitData[10];
-        cvv = rawSplitData[11];
+        country = "USA";
+        rawCard = rawSplitData[7];
+        card=rawCard.match(/.{1,4}/g);
+        expMonth = rawSplitData[8];
+        expYear = rawSplitData[9];
+        cvv = rawSplitData[10];
 
         console.log(rawSplitData);
 
