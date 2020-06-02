@@ -23,22 +23,38 @@
 
   <p>
   Task Settings
-  <br />
   </p>
-  <p>
-  Monitor Delay (variable Input (ms))
-  </p>
-  <p>
-  Retry Delay (Variable Input (ms))
-  </p>
-  <p>
-  Max Retries
-  </p>
-  <p>
-  Rotate Proxies
-  </p>
+  <form onsubmit="botsettings()">
+    <div class="group">
+      <label>Monitor Delay (ms)<br /></label> 
+      <input spellcheck="false" id="name" type="text" required>
+      <span class="highlight"></span>
+      <span class="bar"></span>
+    </div>
 
+    <div class="group">
+      <label>Retry Delay (ms)<br /></label> 
+      <input spellcheck="false" id="name" type="text" required>
+      <span class="highlight"></span>
+      <span class="bar"></span>
+    </div>
 
+    <div class="group">
+      <label>Max Retries (Recommended 500)<br /></label> 
+      <input spellcheck="false" id="name" type="text" required>
+      <span class="highlight"></span>
+      <span class="bar"></span>
+    </div>
+
+    <label>Rotate Proxies (Y or N)<br /></label>
+    <select name = 'rotateproxy' id='rotateproxy'>
+      <option value = "Yes">Yes</option>
+      <option value = "No">No</option>
+    </select>
+  
+  
+  
+  </form>
 
   </body>
 </html>
