@@ -3,7 +3,8 @@
 // ###############################
 
 // Initializes puppeteer
-const puppeteer = require('puppeteer');
+const puppeteer = require('puppeteer-extra');
+const StealthPlugin = require('puppeteer-extra-plugin-stealth');
 const fs = require('fs');
 
 let name = "";
@@ -62,6 +63,7 @@ function fetchData(profName) {
 async function initiate() {
     fetchData("testProfile");
     try {
+        puppeteer.use(StealthPlugin());
         // Launches the browser
         const browser = await puppeteer.launch({
             headless: false,
