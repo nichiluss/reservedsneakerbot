@@ -17,90 +17,76 @@
   <p>
    Profiles Page 
    <br />
-   <br />
-   <br />
   </p>
 
-  <p>
-  Profiles
-  <br />
-  </p>
-  <p>
-  Under Profiles Shows all Saved Profiles
-  <br />
-  <br />
-  <br />
-  </p>
-
-  <p>
-  Billing Information 
-  <br />
-  <br />
-  </p>
   <script type="text/javascript">
 
   
   
   
   </script>
-  <p>Shipping/Billing Info</p>
+  <p>Personal/Shipping Info</p>
 <form onsubmit="saveProfile()">
   <div class="group">
+    <label>Name*<br /></label>
     <input spellcheck="false" id="name" type="text" required>
     <span class="highlight"></span>
     <span class="bar"></span>
-    <label>Name*</label>
   </div>
 
   <div class="group">
+    <label>Email*<br /></label>
     <input spellcheck="false" id="email" type="text" required>
     <span class="highlight"></span>
     <span class="bar"></span>
-    <label>Email*</label>
   </div>
 
   <div class="group">
+    <label>Phone Number*<br /></label>
     <input spellcheck="false" id="phone-number" type="text" required>
     <span class="highlight"></span>
     <span class="bar"></span> 
-    <label>Phone Number*</label>
   </div>
 
   <div class="group">
+    <label>Address*<br /></label>
     <input spellcheck="false" id="address" type="text" required>
     <span class="highlight"></span>
     <span class="bar"></span>
-    <label>Address*</label>
   </div>
 
   <div class="group">
+    <label>Zip Code*<br /></label>
     <input spellcheck="false" id="zip" type="text" maxlength="5" size="5" required>
     <span class="highlight"></span>
     <span class="bar"></span>
-    <label>Zip Code*</label>
   </div>
 
   <div class="group">
+    <label>City*<br /></label>
     <input spellcheck="false" id="city" type="text" required>
     <span class="highlight"></span>
     <span class="bar"></span>
-    <label>City*</label>
   </div>
 
   <div class="group">
+    <label>State*<br /></label>
     <input spellcheck="false" id="state" type="text" required>
     <span class="highlight"></span>
     <span class="bar"></span>
-    <label>State*</label>
   </div>
 
+  <p>Billing Info</p>
+  
   <div class="group">
+    <label>Card Number*<br /></label>
     <input spellcheck="false" id="card" type="text" maxlength= "12" size="12" required>
     <span class="highlight"></span>
     <span class="bar"></span>
-    <label>Card Number*</label>
   </div>
-  <p>Expiration Month/Year</p>
+
+  <label>Exporation Date<br /></label>
+
   <select name = 'Expiration Date' id='expDate'>
     <option value = '01'>01</option>
     <option value = '02'>02</option>
@@ -127,21 +113,14 @@
   </select>
 
   <div class="group">
+    <label>CVV*<br /></label>
     <input spellcheck="false" id="card" type="text" maxlength="3" size="3"required>
     <span class="highlight"></span>
     <span class="bar"></span>
-    <label>CVV*</label>
   </div>
   <input type="submit" value="Save Profile">
 </form>
-  <p>Payment Info</p>
-  <p>Card Type (DropDown Menu)</p>
-  <p>Card Number (Short Answer)</p>
-  <p>Card Experation (Dropdown for Month and Dropdown for Year)</p>
-  <p>CVV (Short Answer)<br /><br /></p>
-
   <p>Profile Name (Short Answer)</p>
-  <p>Save Profile Button (Saves and puts into the Profiles List)</p>
 
   
   </body>
