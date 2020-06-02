@@ -19,14 +19,39 @@
    <br />
   </p>
 
-  <script type="text/javascript">
 
-  
-  
-  
-  </script>
   <p>Personal/Shipping Info</p>
-<form onsubmit="saveProfile()">
+<form>
+  <script>
+    function onClick() {
+      var fs = require('fs');
+      console.log("Test");
+      fs.open("profiles/" + document.getElementById("profName").value + ".pf", 'w', function(err, file) {
+        if (err) throw err;
+      });
+      fs.writeFile("profiles/" + document.getElementById("profName").value + ".pf", 
+      document.getElementById("name").value + "\n" +
+      document.getElementById("email").value + "\n" +
+      document.getElementById("phone-number").value + "\n" +
+      document.getElementById("address").value + "\n" +
+      document.getElementById("zip").value + "\n" +
+      document.getElementById("city").value + "\n" +
+      document.getElementById("state").value + "\n" +
+      document.getElementById("card").value + "\n" +
+      document.getElementById("expDate").value + "\n" +
+      document.getElementById("expYear").value + "\n" +
+      document.getElementById("cardCvv").value + "\n", function (err) {
+        if (err) throw err;
+        console.log("File saved!");
+      })
+    }
+  </script>  
+  <div class="group">
+    <label>Profile Name*<br /></label>
+    <input spellcheck="false" id="profName" type="text" required>
+    <span class="highlight"></span>
+    <span class="bar"></span>
+  </div>
   <div class="group">
     <label>Name*<br /></label>
     <input spellcheck="false" id="name" type="text" required>
@@ -114,11 +139,11 @@
 
   <div class="group">
     <label>CVV*<br /></label>
-    <input spellcheck="false" id="card" type="text" maxlength="3" size="3"required>
+    <input spellcheck="false" id="cardCvv" type="text" maxlength="3" size="3" required>
     <span class="highlight"></span>
     <span class="bar"></span>
   </div>
-  <input type="submit" value="Save Profile">
+  <button type="submit" id="submitButton" onclick="onClick();">Save Profile</button>
 </form>
   <p>Profile Name (Short Answer)</p>
 
