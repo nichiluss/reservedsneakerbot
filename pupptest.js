@@ -3,7 +3,8 @@
 // ###############################
 
 // Initializes puppeteer
-const puppeteer = require('puppeteer');
+const puppeteer = require('puppeteer-extra');
+const StealthPlugin = require('puppeteer-extra-plugin-stealth');
 const fs = require('fs');
 
 let name = "";
@@ -26,10 +27,6 @@ const itemSize = "L";
 const keywords = "Hanes";
 
 //Formatting function for the telephone number
-function addDashes(f) {
-    f_val = f.value.replace(/\D[^\.]/g, "");
-    f.value = f_val.slice(0,3)+"-"+f_val.slice(3,6)+"-"+f_val.slice(6);
-}
 
 // Function that runs the auto selector
 function fetchData(profName) {
@@ -40,13 +37,11 @@ function fetchData(profName) {
         let rawSplitData = content.split("\n");
         name = rawSplitData[0];
         email = rawSplitData[1];
-        tel = rawSplitData[2].replace(/[^0-9]/g, "");
-        addDashes(tel);
+        tel = rawSplitData[2];
         address = rawSplitData[3];
         zip = rawSplitData[4];
         city = rawSplitData[5];
         state = rawSplitData[6];
-        country = "USA";
         rawCard = rawSplitData[7];
         card=rawCard.match(/.{1,4}/g);
         expMonth = rawSplitData[8];
@@ -62,6 +57,7 @@ function fetchData(profName) {
 async function initiate() {
     fetchData("testProfile");
     try {
+        puppeteer.use(StealthPlugin());
         // Launches the browser
         const browser = await puppeteer.launch({
             headless: false,
@@ -218,21 +214,20 @@ async function initiate() {
         page.waitFor(4500);
         
         //Autofills user data
+        await page.type('#order_billing_state', state);
+        page.waitFor(100);
         await page.type('#order_billing_name', name);
         page.waitFor(50);
         await page.type('#order_email', email);
         page.waitFor(50);
         await page.type('#order_tel', tel);
         page.waitFor(500);
+        console.log(address);
         await page.type('#bo.string.required', address);
         page.waitFor(500);
         await page.type('#order_billing_zip', zip);
         page.waitFor(50);
         await page.type('#order_billing_city', city);
-        page.waitFor(50);
-        await page.type('#order_billing_state', state);
-        page.waitFor(100);
-        await page.type('#order_billing_country', country);
         page.waitFor(50);
         await page.type('#rnsnckrn.string.required', card);
         page.waitFor(50);
@@ -243,8 +238,11 @@ async function initiate() {
         await page.type('#orcer.string.required', cvv);
         page.waitFor(50);
         await page.click('#order_terms.checkbox');
-        page.waitFor(5000);
-        await page.click('input.button');
+        page.waitFor(1000);
+        setTimeout(() => {
+           page.click('input.button').then(console.log('Clicked'));
+        }, 750);
+        
         page.waitForSelector('.failed', { visible:true })
             .then(() => console.log("Failed!"))
             .then(() => page.waitFor(1500))
