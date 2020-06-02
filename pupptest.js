@@ -24,7 +24,8 @@ const itemType = "accessories";
 const itemSubType = "wear";
 const qty = "1";
 const itemSize = "L";
-const keywords = "Hanes";
+const keyword1 = "Hanes";
+const keyword2 = "Tees";
 
 //Formatting function for the telephone number
 
@@ -95,8 +96,28 @@ async function initiate() {
             }
             return null;
         }
+        async function findLinkTwoKeywords(page, keyword1, keyword2) {
+            const links = await page.$$('a')
+            for (var i=0; i < links.length; i++) {
+            let valueHandle = await links[i].getProperty('innerText');
+            let jsonKeyword = await valueHandle.jsonValue();
+            const linkString = jsonKeyword.toString();
+
+            let valueLink = await links[i].getProperty('href');
+            let jsonKeywordLink = await valueLink.jsonValue();
+            const link = jsonKeywordLink.toString();
+    //         console.log("test ", keyword, keywordLink);
+
+            if (linkString.includes(keyword1 && keyword2)) {
+                console.log("Item found");
+            await page.goto(link);
+                break;
+            }
+            }
+            return null;
+        }
         
-        findLink(page, keywords);
+        findLinkTwoKeywords(page, keyword1, keyword2);
 
         page.waitForNavigation({ waitUntil: 'networkidle0'});
         await page.waitFor(1500);
