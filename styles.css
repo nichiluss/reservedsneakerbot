@@ -19,12 +19,16 @@ ul {
     display: block;
     color: pink;
     text-align: center;
-    padding: 20px 16px;
+    padding: 14px 10px;
     text-decoration: none;
     margin-right: 70px;
-    margin-left: 70px;
+    margin-left: 80px;
   }
   
   li a:hover {
     background-color: #333;
   }
+
+div.logo {
+  text-align: center;
+}
