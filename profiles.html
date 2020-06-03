@@ -27,6 +27,37 @@
   <p>Personal/Shipping Info</p>
 <form>
   <script>
+    document.addEventListener('input', function(event) {
+      if (event.target.id !== 'profList') return;
+      else if (document.getElementById.value !== "000") {
+        console.log("Stop;")
+        var fs = require('fs');
+        var profList = document.getElementById('profList');
+        console.log(profList);
+        var selectedProf = profList.value;
+        console.log(profList.value);
+        fs.readFile(`./profiles/testProfile.pf`, 'utf8', function read(err, data) {
+          console.log(".");
+          if (err) throw err;
+
+          const content = data;
+          let rawSplitData = content.split("\n");
+          console.log(rawSplitData[0], "...fuck");
+          document.getElementById('name').value = rawSplitData[0];
+          document.getElementById('email').value = rawSplitData[1];
+          document.getElementById('phone-number').value = rawSplitData[2];
+          document.getElementById('address').value = rawSplitData[3];
+          document.getElementById('zip').value = rawSplitData[4];
+          document.getElementById('city').value = rawSplitData[5];
+          document.getElementById('state').value = rawSplitData[6];
+          document.getElementById('card').value = rawSplitData[7];
+          document.getElementById('expDate').value = rawSplitData[8];
+          document.getElementById('expYear').value = rawSplitData[9];
+          document.getElementById('cardCvv').value = rawSplitData[10];
+        });
+      }
+    });
+
     function refreshProfileList() {
       var tempStr = "";
       var fs = require('fs');
