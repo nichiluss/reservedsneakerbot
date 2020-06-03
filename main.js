@@ -28,6 +28,8 @@ function createWindow () {
     //Open DevTools
     win.webContents.openDevTools();
 }
+
+
 //Waits for ready
 app.whenReady().then(createWindow);
 
