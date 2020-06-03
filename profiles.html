@@ -14,7 +14,7 @@
     <li><a href="settings.html" class="active">Settings</a></li>
   </ul>
 
-  <p>
+  <p> 
    Profiles Page 
    <br />
   </p>
@@ -23,6 +23,31 @@
   <p>Personal/Shipping Info</p>
 <form>
   <script>
+    function refreshProfileList() {
+      var tempStr = "";
+      var fs = require('fs');
+      const profDir = './profiles/';;
+
+      fs.readdir(profDir, (err, files) => {
+        files.forEach(file => {
+          tempStr += file.toString() + " ";
+        });
+        var profArray = tempStr.split(".pf ");
+        var profList = document.getElementById("profList");
+        var defaultOpt = document.createElement("option");
+        defaultOpt.value = "000";
+        defaultOpt.text = "Select profile...";
+        profList.add(defaultOpt); 
+        profArray.forEach(temp => {
+          if (temp != "") {
+            var tempOpt = document.createElement("option");
+            tempOpt.value = temp;
+            tempOpt.text = temp;
+            profList.add(tempOpt);
+          }
+        });
+      });
+    }
     function onClick() {
       var fs = require('fs');
       console.log("Test");
@@ -36,16 +61,23 @@
       document.getElementById("address").value + "\n" +
       document.getElementById("zip").value + "\n" +
       document.getElementById("city").value + "\n" +
-      document.getElementById("state").value + "\n" +
+      document.getElementById("state").value + "\n" + 
       document.getElementById("card").value + "\n" +
       document.getElementById("expDate").value + "\n" +
       document.getElementById("expYear").value + "\n" +
       document.getElementById("cardCvv").value + "\n", function (err) {
         if (err) throw err;
         console.log("File saved!");
-      })
+      });
     }
+    refreshProfileList();
   </script>  
+  <div class="group" style="position:absolute;left:500px">
+    <label>Edit Existing Profile<br /></label>
+    <select name="Profiles" id="profList">
+
+    </select>
+  </div>
   <div class="group">
     <label>Profile Name*<br /></label>
     <input spellcheck="false" id="profName" type="text" required>
@@ -145,7 +177,6 @@
   </div>
   <button type="submit" id="submitButton" onclick="onClick();">Save Profile</button>
 </form>
-  <p>Profile Name (Short Answer)</p>
 
   
   </body>
