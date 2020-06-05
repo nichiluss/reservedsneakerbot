@@ -27,7 +27,9 @@ button.addEventListener('click', () => {
        win.loadURL('https://accounts.google.com/signin/v2/identifier?hl=en&service=youtube&continue=https%3A%2F%2Fwww.youtube.com%2Fsignin%3Ffeature%3Dsign_in_button%26hl%3Den%26app%3Ddesktop%26next%3D%252F%26action_handle_signin%3Dtrue&passive=true&uilel=3&flowName=GlifWebSignIn&flowEntry=ServiceLogin', {
                     userAgent: 'Chrome'
                 })
-                
+        win.webContents.send('triggerCaptcha')
+
+        ipcMain.on('captcha-done',async (event, token) => { console.log('captcha token', token)})
 
             }
 

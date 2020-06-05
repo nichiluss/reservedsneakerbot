@@ -1,3 +1,5 @@
+const ipcRenderer = require('electron').ipcRenderer
+
 window.addEventListener("load", async (e) => {
     if (location.host.includes('supremenewyork')) {
         $("body").html("")
