@@ -59,9 +59,34 @@
       document.getElementById('city').value = rawSplitData[5];
       document.getElementById('state').value = rawSplitData[6];
       document.getElementById('card').value = rawSplitData[7];
-      document.getElementById('expDate').value = rawSplitData[8];
-      document.getElementById('expYear').value = rawSplitData[9];
+
+      let dumbLoserCodeVariable = dumbLoserCodeFunction(rawSplitData[8]);
+      document.getElementById('expDate').value = dumbLoserCodeVariable;
+      dumbLoserCodeVariable = dumbLoserCodeFunction(rawSplitData[9]);
+      document.getElementById('expYear').value = dumbLoserCodeVariable;
       document.getElementById('cardCvv').value = rawSplitData[10];
+    }
+
+    function dumbLoserCodeFunction(dumb) {
+      if (dumb == 1) return "0" + 1;
+      if (dumb == 2) return "0" + 2;
+      if (dumb == 3) return "0" + 3;
+      if (dumb == 4) return "0" + 4;
+      if (dumb == 5) return "0" + 5;
+      if (dumb == 6) return "0" + 6;
+      if (dumb == 7) return "0" + 7;
+      if (dumb == 8) return "0" + 8;
+      if (dumb == 9) return "0" + 9;
+      if (dumb == 10) return "" + 10;
+      if (dumb == 11) return "" + 11;
+      if (dumb == 12) return "" + 12;
+      if (dumb == 2020) return "" + 2020;
+      if (dumb == 2021) return "" + 2021;
+      if (dumb == 2022) return "" + 2022;
+      if (dumb == 2023) return "" + 2023;
+      if (dumb == 2024) return "" + 2024;
+      if (dumb == 2025) return "" + 2025;
+      if (dumb == 2026) return "" + 2026;
     }
 
     function refreshProfileList() {
@@ -185,19 +210,19 @@
 
   <label>Expiration Date<br /></label>
 
-  <select name = 'Expiration Date' id='expDate'>
-    <option value = '01'>01</option>
-    <option value = '02'>02</option>
-    <option value = '03'>03</option>
-    <option value = '04'>04</option>
-    <option value = '05'>05</option>
-    <option value = '06'>06</option>
-    <option value = '07'>07</option>
-    <option value = '08'>08</option>
-    <option value = '09'>09</option>
-    <option value = '10'>10</option>
-    <option value = '11'>11</option>
-    <option value = '12'>12</option>
+  <select name = Expiration Date id='expDate'>
+    <option value = "01">01</option>
+    <option value = "02">02</option>
+    <option value = "03">03</option>
+    <option value = "04">04</option>
+    <option value = "05">05</option>
+    <option value = "06">06</option>
+    <option value = "07">07</option>
+    <option value = "08">08</option>
+    <option value = "09">09</option>
+    <option value = "10">10</option>
+    <option value = "11">11</option>
+    <option value = "12">12</option>
   </select>
 
   <select name = 'Expiration Year' id='expYear'>
