@@ -4,9 +4,9 @@ window.addEventListener("load", async (e) => {
     if (location.host.includes('supremenewyork')) {
         $("body").html("")
         $("body").css('background-color', '#131313')
-        $("body").append(`<video style="width: 100%; padding-top: 50px" autoplay muted loop >
-        <source src="https://cdn.shopify.com/s/files/1/0359/3437/1975/files/Captcha_solver_gif_2.mp4?v=1590269435" type="video/mp4">
-        </video>`)
+        //$("body").append(`<video style="width: 100%; padding-top: 50px" autoplay muted loop >
+        //<source src="https://cdn.shopify.com/s/files/1/0359/3437/1975/files/Captcha_solver_gif_2.mp4?v=1590269435" type="video/mp4">
+        //</video>`)
     
         $("body").append("<div id='gc' data-size='invisible' data-error-callback='captchaError'></div>")
     
