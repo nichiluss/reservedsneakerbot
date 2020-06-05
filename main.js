@@ -75,12 +75,12 @@ function openHarvesterWindow(pageURL) {
         hasShadow: false,
         backgroundColor: "#131313",
         maximizable: false,
-        //resizable: false,
+        resizable: false,
         icon: __dirname + '/images/logo.png',
         title: 'RESERVED AIO - CAPTCHA HARVESTER',
     })
     harvesterWindow.removeMenu();
-    
+
     harvesterWindow.loadURL(pageURL, {
                 userAgent: 'Chrome'
             })
