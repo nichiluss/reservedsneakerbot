@@ -53,6 +53,13 @@ function fetchData(profName) {
 
 
     });
+    fs.close(0, (err) => { 
+        if (err) 
+          console.error('Failed to close file', err); 
+        else { 
+          console.log("\n> File Closed successfully"); 
+        }
+     });
     console.log(rawProfileText);
 }
 async function initiate(profName) {
