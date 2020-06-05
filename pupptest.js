@@ -55,8 +55,8 @@ function fetchData(profName) {
     });
     console.log(rawProfileText);
 }
-async function initiate() {
-    fetchData("testProfile");
+async function initiate(profName) {
+    fetchData(profName);
     try {
         puppeteer.use(StealthPlugin());
         // Launches the browser

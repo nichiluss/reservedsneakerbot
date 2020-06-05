@@ -30,8 +30,36 @@
   <p>Example of indivudual task</p>
   <p>Product ID (Tbuilder) -> Profile (Tbuilder) -> Category (Tbuilder) -> Keywords (Tbuilder) -> Color (Tbuilder) -> Size (Tbuilder) -> Proxie (yes/no) -> Status (Task Status)</p>
 
-  
-  <button id="btn1" onclick="initiate()" >Run Task</button><br/>
+  <select id="profList"></select>
+  <script>
+    function refreshProfileList() {
+      var tempStr = "";
+      var fs = require('fs');
+      const profDir = './profiles/';;
+
+      fs.readdir(profDir, (err, files) => {
+        files.forEach(file => {
+          tempStr += file.toString() + " ";
+        });
+        var profArray = tempStr.split(".pf ");
+        var profList = document.getElementById("profList");
+        var defaultOpt = document.createElement("option");
+        defaultOpt.value = "000";
+        defaultOpt.text = "Select profile...";
+        profList.add(defaultOpt); 
+        profArray.forEach(temp => {
+          if (temp != "") {
+            var tempOpt = document.createElement("option");
+            tempOpt.value = temp;
+            tempOpt.text = temp;
+            profList.add(tempOpt);
+          }
+        });
+      });
+    }
+    refreshProfileList();
+  </script>
+  <button id="btn1" onclick="initiate(document.getElementById('profList').value)" >Run Task</button><br/>
   <script type="text/javascript" src="pupptest.js"></script>
   
   </body>
