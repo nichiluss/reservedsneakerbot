@@ -27,32 +27,41 @@
   <p>Personal/Shipping Info</p>
 <form>
   <script>
+    let test = "";
+    function getProfInfo(selectedProf) {
+      var rawFile = new XMLHttpRequest();
+      var allText = "";
+      rawFile.open("GET", "./profiles/" + selectedProf + ".pf", false);
+      rawFile.onreadystatechange = function() {
+        if (rawFile.readyState === 4) {
+          if (rawFile.status === 200 || rawFile.status == 0) {
+            allText = rawFile.responseText;
+          }
+        }
+      }
+      rawFile.send(null);
+      return allText.split("\n");
+    }
+
     function onClickEdit() {
-      const fs = require('fs');
       var profList = document.getElementById('profList');
-      console.log(profList);
       var selectedProf = profList.value;
       console.log(profList.value);
-      fs.readFile(`./profiles/${selectedProf}.pf`, 'utf8', function read(err, data) {
-        console.log(".");
-        if (err) throw err;
-
-        const content = data;
-        let rawSplitData = content.split("\n");
-        console.log(rawSplitData[0], "...fuck");
-        document.getElementById('profName').value = selectedProf;
-        document.getElementById('name').value = rawSplitData[0];
-        document.getElementById('email').value = rawSplitData[1];
-        document.getElementById('phone-number').value = rawSplitData[2];
-        document.getElementById('address').value = rawSplitData[3];
-        document.getElementById('zip').value = rawSplitData[4];
-        document.getElementById('city').value = rawSplitData[5];
-        document.getElementById('state').value = rawSplitData[6];
-        document.getElementById('card').value = rawSplitData[7];
-        document.getElementById('expDate').value = rawSplitData[8];
-        document.getElementById('expYear').value = rawSplitData[9];
-        document.getElementById('cardCvv').value = rawSplitData[10];
-      });
+      let rawSplitData = getProfInfo(selectedProf);
+      
+      console.log(rawSplitData[0], "...fuck");
+      document.getElementById('profName').value = selectedProf;
+      document.getElementById('name').value = rawSplitData[0];
+      document.getElementById('email').value = rawSplitData[1];
+      document.getElementById('phone-number').value = rawSplitData[2];
+      document.getElementById('address').value = rawSplitData[3]
+      document.getElementById('zip').value = rawSplitData[4];
+      document.getElementById('city').value = rawSplitData[5];
+      document.getElementById('state').value = rawSplitData[6];
+      document.getElementById('card').value = rawSplitData[7];
+      document.getElementById('expDate').value = rawSplitData[8];
+      document.getElementById('expYear').value = rawSplitData[9];
+      document.getElementById('cardCvv').value = rawSplitData[10];
     }
 
     function refreshProfileList() {
@@ -207,7 +216,7 @@
     <span class="highlight"></span>
     <span class="bar"></span>
   </div>
-  <button type="submit" id="submitButton" onclick="onClickSave();">Save Profile</button>
+  <button type="submit" id="submitButton" onclick="onClickSave();">Save Changes</button>
 </form>
 
   </body>
