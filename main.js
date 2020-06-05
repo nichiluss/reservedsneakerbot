@@ -7,9 +7,15 @@ const nativeMenus = [
         label: 'Harvester',
         submenu: [
             {
-                label: 'Harvester',
+                label: 'Supreme',
                 click() {
-                    openHarvesterWindow()
+                    openHarvesterWindow('https://supremenewyork.com')
+                },
+            },
+            {
+                label: 'GLogin',
+                click() {
+                    openHarvesterWindow("https://accounts.google.com/signin/v2/identifier?hl=en&service=youtube&continue=https%3A%2F%2Fwww.youtube.com%2Fsignin%3Ffeature%3Dsign_in_button%26hl%3Den%26app%3Ddesktop%26next%3D%252F%26action_handle_signin%3Dtrue&passive=true&uilel=3&flowName=GlifWebSignIn&flowEntry=ServiceLogin")
                 }
             }
         ]
@@ -51,7 +57,7 @@ app.whenReady().then(createWindow);
 
 var harvesterWindow = null
 
-function openHarvesterWindow() {
+function openHarvesterWindow(pageURL) {
     if (harvesterWindow) {
         harvesterWindow.focus()
         return
@@ -73,14 +79,18 @@ function openHarvesterWindow() {
         icon: __dirname + '/images/logo.png',
         title: 'RESERVED AIO - CAPTCHA HARVESTER',
     })
-
-    harvesterWindow.loadURL('https://supremenewyork.com', {
-                userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) BOEHLERIOSupreme/0.8.5 Chrome/80.0.3987.137 Electron/8.1.0 Safari/537.36'
+    harvesterWindow.removeMenu();
+    
+    harvesterWindow.loadURL(pageURL, {
+                userAgent: 'Chrome'
             })
+    
+    if(pageURL == "https://supremenewyork.com") {
+        harvesterWindow.webContents.send('triggerCaptcha')
 
-    harvesterWindow.webContents.send('triggerCaptcha')
-
-    ipcMain.on('captcha-done', async (event, token) => { console.log('captcha token', token)})
+        ipcMain.on('captcha-done', async (event, token) => { console.log('captcha token', token)})
+        }
+    
     }
 
 //Checks to make sure that the app doesn't minimize to tray
