@@ -30,6 +30,16 @@ const nativeImage = require('electron').nativeImage;
 
     image.setTemplateImage(true);
 
+function setWithExpiry(value) {
+      const now = new Date()
+
+      const item = {
+        value: value,
+        expiry: now.getTime() + 120000
+      }
+      window.localStorage.setItem(JSON.stringify(item))
+      console.log(value)
+    }
 function createWindow () {
     const win = new BrowserWindow({
         width: 1175,
@@ -68,14 +78,14 @@ function openHarvesterWindow(pageURL) {
         width: 400,    height: 600,
         webPreferences: {
             nodeIntegration: true,
-            //devtools: true,
+            devtools: true,
             preload: `${__dirname}/harvester.js` // some console log stuff
         },
         fullscreenable: false,
         hasShadow: false,
         backgroundColor: "#131313",
         maximizable: false,
-        resizable: false,
+        resizable: true,
         icon: __dirname + '/images/logo.png',
         title: 'RESERVED AIO - CAPTCHA HARVESTER',
     })
@@ -86,7 +96,7 @@ function openHarvesterWindow(pageURL) {
             })
     
     if(pageURL == "https://supremenewyork.com") {
-        harvesterWindow.webContents.send('triggerCaptcha')
+        harvesterWindow.webContents.send("triggerCaptcha")
 
         ipcMain.on('captcha-done', async (event, token) => { 
             setWithExpiry(token) 

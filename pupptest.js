@@ -64,6 +64,7 @@ function fetchData(profName) {
     console.log(rawProfileText);
 }
 function getWithExpiry() {
+    var i = window.localStorage.length - 1;
     for (var i in window.localStorage){
         const itemStr = localStorage.getItem(i)
         // if the item doesn't exist, return null
@@ -76,9 +77,7 @@ function getWithExpiry() {
         // compare the expiry time of the item with the current time
         if (now.getTime() > item.expiry) {
             // If the item is expired, delete the item from storage
-            // and return null
             localStorage.removeItem(i)
-            return null
         }else{
             return item.value
             break;
@@ -293,7 +292,8 @@ async function initiate(profName) {
         page.waitFor(1000);
         setTimeout(() => {
             const tokenpass = getWithExpiry()
-            await this.page.evaluate(document.getElementById("g-recaptcha-response").innerHTML = `${tokenpass}`)  //inject token here
+            await this.page.evaluate(document.getElementById("g-recaptcha-response").innerHTML = `${tokenpass}`)
+            window.callback();  //inject token here
             page.click('input.button').then(console.log('Clicked'));
         }, 750);
         
