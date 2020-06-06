@@ -292,9 +292,8 @@ async function initiate(profName) {
         page.waitFor(1000);
         setTimeout(() => {
             const tokenpass = getWithExpiry()
-            await this.page.evaluate(document.getElementById("g-recaptcha-response").innerHTML = `${tokenpass}`)
-            window.callback();  //inject token here
             page.click('input.button').then(console.log('Clicked'));
+            page.evaluate(document.getElementById("g-recaptcha-response").innerHTML = `${tokenpass}`)
         }, 750);
         
         page.waitForSelector('.failed', { visible:true })
