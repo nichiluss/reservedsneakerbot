@@ -6,6 +6,7 @@
 const puppeteer = require('puppeteer-extra');
 const StealthPlugin = require('puppeteer-extra-plugin-stealth');
 const fs = require('fs');
+const ipcRenderer = require('electron').ipcRenderer
 
 let name = "";
 let email = "";
@@ -61,6 +62,29 @@ function fetchData(profName) {
         }
      });
     console.log(rawProfileText);
+}
+function getWithExpiry() {
+    for (var i in window.localStorage){
+        const itemStr = localStorage.getItem(i)
+        // if the item doesn't exist, return null
+        if (!itemStr) {
+            return null
+        }
+
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+        // compare the expiry time of the item with the current time
+        if (now.getTime() > item.expiry) {
+            // If the item is expired, delete the item from storage
+            // and return null
+            localStorage.removeItem(i)
+            return null
+        }else{
+            return item.value
+            break;
+        }
+        i--
+    }
 }
 async function initiate(profName) {
     fetchData(profName);
@@ -268,7 +292,9 @@ async function initiate(profName) {
         await page.click('#order_terms.checkbox');
         page.waitFor(1000);
         setTimeout(() => {
-           page.click('input.button').then(console.log('Clicked'));
+            const tokenpass = getWithExpiry()
+            await this.page.evaluate(document.getElementById("g-recaptcha-response").innerHTML = `${tokenpass}`)  //inject token here
+            page.click('input.button').then(console.log('Clicked'));
         }, 750);
         
         page.waitForSelector('.failed', { visible:true })

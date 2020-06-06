@@ -88,7 +88,10 @@ function openHarvesterWindow(pageURL) {
     if(pageURL == "https://supremenewyork.com") {
         harvesterWindow.webContents.send('triggerCaptcha')
 
-        ipcMain.on('captcha-done', async (event, token) => { console.log('captcha token', token)})
+        ipcMain.on('captcha-done', async (event, token) => { 
+            setWithExpiry(token) 
+            console.log(token)
+        })
         }
     
     }

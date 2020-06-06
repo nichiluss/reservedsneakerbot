@@ -48,10 +48,21 @@ window.addEventListener("load", async (e) => {
           }, 250)
         }
     
-        window.grecaptcha.execute(captchaID)
     
         ipcRenderer.on("triggerCaptcha", async () => {
           window.grecaptcha.execute(captchaID)
         })
+        
       }
     })
+    function setWithExpiry(value) {
+      const now = new Date()
+      
+      // `item` is an object which contains the original value
+      // as well as the time when it's supposed to expire
+      const item = {
+        value: value,
+        expiry: now.getTime() + 120000
+      }
+      localStorage.setItem(JSON.stringify(item))
+    }
