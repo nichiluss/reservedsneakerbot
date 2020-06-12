@@ -1,7 +1,11 @@
 const { app, BrowserWindow } = require('electron');
 const { Menu } = require('electron')
 const ipcMain = require('electron').ipcMain
+const fs = require('fs')
+const os = require('os')
+const storage = require('electron-json-storage')
 
+storage.setDataPath(os.tmpdir())
 const nativeMenus = [
     {
         label: 'Harvester',
@@ -37,8 +41,10 @@ function setWithExpiry(value) {
         value: value,
         expiry: now.getTime() + 120000
       }
-      window.localStorage.setItem(JSON.stringify(item))
-      console.log(value)
+      storage.set('captcha', JSON.stringify(item))
+      fs.writeFile('captchalog.txt', value, (err) => {
+          if (err) throw err;
+      })
     }
 function createWindow () {
     const win = new BrowserWindow({
