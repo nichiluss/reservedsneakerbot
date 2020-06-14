@@ -125,7 +125,7 @@
           tempStr += file.toString() + " ";
         });
         var profArray = tempStr.split(".pf ");
-        var profList = document.getElementById("profList");
+        var profList = document.getElementById("editProfList");
         var defaultOpt = document.createElement("option");
         defaultOpt.value = "000";
         defaultOpt.text = "Select profile...";
@@ -167,7 +167,7 @@
   </script>  
   <div class="group" style="position:absolute;left:500px">
     <label>Edit Existing Profile<br /></label>
-    <select name="Profiles" id="profList"></select>
+    <select name="Profiles" id="editProfList"></select>
     <button name="btnEdit" type="button" id="btnEditProfile" onclick="onClickEdit()">Edit Profile</button>
   </div>
   <div class="group">
