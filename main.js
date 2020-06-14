@@ -7,6 +7,7 @@ const storage = require('electron-json-storage');
 const puppeteer = require('puppeteer-extra');
 const StealthPlugin = require('puppeteer-extra-plugin-stealth')();
 
+
 storage.setDataPath(os.tmpdir());
 StealthPlugin.onBrowser = () => {};
 
@@ -153,7 +154,7 @@ function openHarvesterWindow(pageURL) {
                 userAgent: 'Chrome'
             })
     
-    if(pageURL == "https://supremenewyork.com") {
+    if(pageURL == 'https://supremenewyork.com') {
         harvesterWindow.webContents.send("triggerCaptcha")
 
         ipcMain.on('captcha-done', async (event, token) => { 
@@ -401,11 +402,12 @@ function openHarvesterWindow(pageURL) {
             page.waitFor(50);
             await page.click('#order_terms.checkbox');
             page.waitFor(1000);
+            //openHarvesterWindow('https://supremenewyork.com')
             setTimeout(async () => {
-                var tokenpass = await getWithExpiry("captcha");
-                console.log(tokenpass)
+                let tokenpass = await getWithExpiry('captcha')
                 await page.evaluate((tokenpass) => {document.getElementById("g-recaptcha-response").innerText = `${tokenpass}`}, tokenpass)
-                await page.click('input.button').then(console.log('Clicked'));
+                await page.click('input.button').then(console.log('Clicked'))
+                await page.evaluate((tokenpass) => {document.getElementById("g-recaptcha-response").innerText = `${tokenpass}`}, tokenpass)
                 await page.waitFor(1000)
                 
                 
