@@ -405,6 +405,9 @@ function openHarvesterWindow(pageURL) {
                 //page.click('input.button').then(console.log('Clicked'));
                 page.evaluate(() => {document.getElementById("g-recaptcha-response").innerHTML = `${tokenpass}`})
                 page.click('input.button').then(console.log('Clicked'));
+                page.waitFor(2000);
+                let token = page.value('#recaptcha-token').innerHTML;
+                console.log(token);
             }, 750);
             
             page.waitForSelector('.failed', { visible:true })
