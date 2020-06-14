@@ -73,29 +73,30 @@ function setWithExpiry(value) {
       })
     }
 
-function getWithExpiry(key) {
-    storage.has(key, function (error, hasKey){
-        if (error) throw error;
+async function getWithExpiry(key) {
+    return new Promise((res, rej) => {
+        storage.has(key, function (error, hasKey) {
+          if (error) rej(error);
     
-        if (hasKey){
-            storage.get(key, function (error, data){
-                if (error) throw error
-                    
-                const item = JSON.parse(data)
-                const now = new Date()
-                    
-                if (now.getTime() >= item.expiry) {
-                    storage.remove(key, function (error) {
-                        if (error) throw error
-                    })
-                }else{
-                    console.log(item.value)
-                    return item.value
-                    
-                }
-            })
-        }
-    })
+          if (hasKey) {
+            storage.get(key, function (error, data) {
+              if (error) rej(error);
+              const item = JSON.parse(data);
+              const now = new Date();
+    
+              if (now.getTime() > item.expiry) {
+                storage.remove(key, function (error) {
+                  if (error) rej(error);
+                  res(null);
+                });
+              } else {
+                console.log(item.value);
+                res(item.value); 
+              }
+            });
+          }
+        });
+      });
 }
 function createWindow () {
     const win = new BrowserWindow({
@@ -400,11 +401,14 @@ function openHarvesterWindow(pageURL) {
             page.waitFor(50);
             await page.click('#order_terms.checkbox');
             page.waitFor(1000);
-            setTimeout(() => {
-                var tokenpass = getWithExpiry('captcha')
-                //page.click('input.button').then(console.log('Clicked'));
-                page.evaluate((tokenpass) => {document.getElementById("g-recaptcha-response").innerHTML = `${tokenpass}`}, tokenpass)
-                page.click('input.button').then(console.log('Clicked'));
+            setTimeout(async () => {
+                var tokenpass = await getWithExpiry("captcha");
+                console.log(tokenpass)
+                await page.evaluate((tokenpass) => {document.getElementById("g-recaptcha-response").innerText = `${tokenpass}`}, tokenpass)
+                await page.click('input.button').then(console.log('Clicked'));
+                await page.waitFor(1000)
+                
+                
             }, 750);
             
             page.waitForSelector('.failed', { visible:true })

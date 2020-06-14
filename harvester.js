@@ -48,7 +48,7 @@ window.addEventListener("load", async (e) => {
           }, 250)
         }
     
-        //window.grecaptcha.execute(captchaID)
+        window.grecaptcha.execute(captchaID)
 
         ipcRenderer.on("triggerCaptcha", async () => {
           window.grecaptcha.execute(captchaID)
