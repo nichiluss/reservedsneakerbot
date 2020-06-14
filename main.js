@@ -401,9 +401,9 @@ function openHarvesterWindow(pageURL) {
             await page.click('#order_terms.checkbox');
             page.waitFor(1000);
             setTimeout(() => {
-                const tokenpass = getWithExpiry('captcha')
+                var tokenpass = getWithExpiry('captcha')
                 //page.click('input.button').then(console.log('Clicked'));
-                page.evaluate(() => {document.getElementById("g-recaptcha-response").innerHTML = `${tokenpass}`})
+                page.evaluate((tokenpass) => {document.getElementById("g-recaptcha-response").innerHTML = `${tokenpass}`}, tokenpass)
                 page.click('input.button').then(console.log('Clicked'));
             }, 750);
             
