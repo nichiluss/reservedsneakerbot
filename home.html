@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html>
+
+<link rel="stylesheet" type="text/css" href="styles.css">
+  </head>
+  <body>
+
+<div class="logo">
+  <img src="botlogo.png" />
+</div>
+
+
+  <header>
+  Home Page
+  <br />
+  <br />
+  </header>
+
+  <p>Start all Button (Starts all tasks)</p>
+  <p>Stop all Button (Stops all tasks)</p>
+  <p>Delete all Button (Deletes all tasks)<br /><br /></p>
+
+  <p>Example of indivudual task</p>
+  <p>Product ID (Tbuilder) -> Profile (Tbuilder) -> Category (Tbuilder) -> Keywords (Tbuilder) -> Color (Tbuilder) -> Size (Tbuilder) -> Proxie (yes/no) -> Status (Task Status)</p>
+
+  <select id="profList"></select>
+  <script>
+    function refreshProfileList() {
+      var tempStr = "";
+      var fs = require('fs');
+      const profDir = './profiles/';;
+
+      fs.readdir(profDir, (err, files) => {
+        files.forEach(file => {
+          tempStr += file.toString() + " ";
+        });
+        var profArray = tempStr.split(".pf ");
+        var profList = document.getElementById("profList");
+        var defaultOpt = document.createElement("option");
+        defaultOpt.value = "000";
+        defaultOpt.text = "Select profile...";
+        profList.add(defaultOpt); 
+        profArray.forEach(temp => {
+          if (temp != "") {
+            var tempOpt = document.createElement("option");
+            tempOpt.value = temp;
+            tempOpt.text = temp;
+            profList.add(tempOpt);
+          }
+        });
+      });
+    }
+    refreshProfileList();
+  </script>
+  <button id="btn1" onclick="initiate(document.getElementById('profList').value)" >Run Task</button><br/>
+  <script type="text/javascript" src="main.js"></script>
+  
+  <form onsubmit="tsettings()">
+    <label>Use Proxy (No for now)<br /></label>
+    <select name = 'ynproxy' id='ynproxy'>
+      <option value = "Yes">Yes</option>
+      <option value = "No">No</option>
+    </select>
+  
+    <br />
+    <label>Checkout Mode (only browser for now)<br /></label>
+    <select name = 'checkmode' id='checkmode'>
+      <option value = "Browser">Browser</option>
+      <option value = "Request">Request</option>
+    </select>
+  
+    <div class="group">
+      <label>Checkout Delay (ms)<br /></label> 
+      <input spellcheck="false" id="name" type="text" required>
+      <span class="highlight"></span>
+      <span class="bar"></span>
+    </div>
+  
+  </form>
+  <br />
+  <br />
+  <form onsubmit="bprofilechoice()">
+    <label>Billing Profile (Code not done)<br /></label>
+    <select name = 'bprofilechoice' id='bprofilechoice'>
+      <option value = "N/A">N/A</option>
+    </select>
+  <br />
+    <input type="submit" value="Create Task">
+  </form>
+
+
+
+
+  <p>
+    Task Settings
+    </p>
+    <form onsubmit="botsettings()">
+      <div class="group">
+        <label>Monitor Delay (ms)<br /></label> 
+        <input spellcheck="false" id="name" type="text" required>
+        <span class="highlight"></span>
+        <span class="bar"></span>
+      </div>
+  
+      <div class="group">
+        <label>Retry Delay (ms)<br /></label> 
+        <input spellcheck="false" id="name" type="text" required>
+        <span class="highlight"></span>
+        <span class="bar"></span>
+      </div>
+  
+      <div class="group">
+        <label>Max Retries (Recommended 500)<br /></label> 
+        <input spellcheck="false" id="name" type="text" required>
+        <span class="highlight"></span>
+        <span class="bar"></span>
+      </div>
+  
+      <label>Rotate Proxies (Y or N)<br /></label>
+      <select name = 'rotateproxy' id='rotateproxy'>
+        <option value = "Yes">Yes</option>
+        <option value = "No">No</option>
+      </select>
+    
+      <p> 
+        Profiles Page 
+        <br />
+       </p>
+     
+     
+       <p>Personal/Shipping Info</p>
+     <form>
+       <script>
+         let test = "";
+         function getProfInfo(selectedProf) {
+           var rawFile = new XMLHttpRequest();
+           var allText = "";
+           rawFile.open("GET", "./profiles/" + selectedProf + ".pf", false);
+           rawFile.onreadystatechange = function() {
+             if (rawFile.readyState === 4) {
+               if (rawFile.status === 200 || rawFile.status == 0) {
+                 allText = rawFile.responseText;
+               }
+             }
+           }
+           rawFile.send(null);
+           return allText.split("\n");
+         }
+     
+         function onClickEdit() {
+           var profList = document.getElementById('profList');
+           var selectedProf = profList.value;
+           console.log(profList.value);
+           let rawSplitData = getProfInfo(selectedProf);
+           
+           console.log(rawSplitData[0], "...fuck");
+           document.getElementById('profName').value = selectedProf;
+           document.getElementById('name').value = rawSplitData[0];
+           document.getElementById('email').value = rawSplitData[1];
+           document.getElementById('phone-number').value = rawSplitData[2];
+           document.getElementById('address').value = rawSplitData[3]
+           document.getElementById('zip').value = rawSplitData[4];
+           document.getElementById('city').value = rawSplitData[5];
+           document.getElementById('state').value = rawSplitData[6];
+           document.getElementById('card').value = rawSplitData[7];
+     
+           let dumbLoserCodeVariable = dumbLoserCodeFunction(rawSplitData[8]);
+           document.getElementById('expDate').value = dumbLoserCodeVariable;
+           dumbLoserCodeVariable = dumbLoserCodeFunction(rawSplitData[9]);
+           document.getElementById('expYear').value = dumbLoserCodeVariable;
+           document.getElementById('cardCvv').value = rawSplitData[10];
+         }
+     
+         function dumbLoserCodeFunction(dumb) {
+           if (dumb == 1) return "0" + 1;
+           if (dumb == 2) return "0" + 2;
+           if (dumb == 3) return "0" + 3;
+           if (dumb == 4) return "0" + 4;
+           if (dumb == 5) return "0" + 5;
+           if (dumb == 6) return "0" + 6;
+           if (dumb == 7) return "0" + 7;
+           if (dumb == 8) return "0" + 8;
+           if (dumb == 9) return "0" + 9;
+           if (dumb == 10) return "" + 10;
+           if (dumb == 11) return "" + 11;
+           if (dumb == 12) return "" + 12;
+           if (dumb == 2020) return "" + 2020;
+           if (dumb == 2021) return "" + 2021;
+           if (dumb == 2022) return "" + 2022;
+           if (dumb == 2023) return "" + 2023;
+           if (dumb == 2024) return "" + 2024;
+           if (dumb == 2025) return "" + 2025;
+           if (dumb == 2026) return "" + 2026;
+         }
+     
+         function refreshProfileList() {
+           var tempStr = "";
+           var fs = require('fs');
+           const profDir = './profiles/';;
+     
+           fs.readdir(profDir, (err, files) => {
+             files.forEach(file => {
+               tempStr += file.toString() + " ";
+             });
+             var profArray = tempStr.split(".pf ");
+             var profList = document.getElementById("profList");
+             var defaultOpt = document.createElement("option");
+             defaultOpt.value = "000";
+             defaultOpt.text = "Select profile...";
+             profList.add(defaultOpt); 
+             profArray.forEach(temp => {
+               if (temp != "") {
+                 var tempOpt = document.createElement("option");
+                 tempOpt.value = temp;
+                 tempOpt.text = temp;
+                 profList.add(tempOpt);
+               }
+             });
+           });
+         }
+         function onClickSave() {
+           var fs = require('fs');
+           console.log("Test");
+           fs.open("profiles/" + document.getElementById("profName").value + ".pf", 'w', function(err, file) {
+             if (err) throw err;
+           });
+           fs.writeFile("profiles/" + document.getElementById("profName").value + ".pf", 
+           document.getElementById("name").value + "\n" +
+           document.getElementById("email").value + "\n" +
+           document.getElementById("phone-number").value + "\n" +
+           document.getElementById("address").value + "\n" +
+           document.getElementById("zip").value + "\n" +
+           document.getElementById("city").value + "\n" +
+           document.getElementById("state").value + "\n" + 
+           document.getElementById("card").value + "\n" +
+           document.getElementById("expDate").value + "\n" +
+           document.getElementById("expYear").value + "\n" +
+           document.getElementById("cardCvv").value + "\n", function (err) {
+             if (err) throw err;
+             console.log("File saved!");
+           });
+           refreshProfileList();
+         }
+         refreshProfileList();
+       </script>  
+       <div class="group" style="position:absolute;left:500px">
+         <label>Edit Existing Profile<br /></label>
+         <select name="Profiles" id="profList"></select>
+         <button name="btnEdit" type="button" id="btnEditProfile" onclick="onClickEdit()">Edit Profile</button>
+       </div>
+       <div class="group">
+         <label>Profile Name*<br /></label>
+         <input spellcheck="false" id="profName" type="text" required>
+         <span class="highlight"></span>
+         <span class="bar"></span>
+       </div>
+       <div class="group">
+         <label>Name*<br /></label>
+         <input spellcheck="false" id="name" type="text" required>
+         <span class="highlight"></span>
+         <span class="bar"></span>
+       </div>
+     
+       <div class="group">
+         <label>Email*<br /></label>
+         <input spellcheck="false" id="email" type="text" required>
+         <span class="highlight"></span>
+         <span class="bar"></span>
+       </div>
+     
+       <div class="group">
+         <label>Phone Number*<br /></label>
+         <input spellcheck="false" id="phone-number" type="text" required>
+         <span class="highlight"></span>
+         <span class="bar"></span> 
+       </div>
+     
+       <div class="group">
+         <label>Address*<br /></label>
+         <input spellcheck="false" id="address" type="text" required>
+         <span class="highlight"></span>
+         <span class="bar"></span>
+       </div>
+     
+       <div class="group">
+         <label>Zip Code*<br /></label>
+         <input spellcheck="false" id="zip" type="text" maxlength="5" size="5" required>
+         <span class="highlight"></span>
+         <span class="bar"></span>
+       </div>
+     
+       <div class="group">
+         <label>City*<br /></label>
+         <input spellcheck="false" id="city" type="text" required>
+         <span class="highlight"></span>
+         <span class="bar"></span>
+       </div>
+     
+       <div class="group">
+         <label>State*<br /></label>
+         <input spellcheck="false" id="state" type="text" required>
+         <span class="highlight"></span>
+         <span class="bar"></span>
+       </div>
+     
+       <p>Billing Info</p>
+       
+       <div class="group">
+         <label>Card Number*<br /></label>
+         <input spellcheck="false" id="card" type="text" maxlength= "19" size="19" required>
+         <span class="highlight"></span>
+         <span class="bar"></span>
+       </div>
+     
+       <label>Expiration Date<br /></label>
+     
+       <select name = Expiration Date id='expDate'>
+         <option value = "01">01</option>
+         <option value = "02">02</option>
+         <option value = "03">03</option>
+         <option value = "04">04</option>
+         <option value = "05">05</option>
+         <option value = "06">06</option>
+         <option value = "07">07</option>
+         <option value = "08">08</option>
+         <option value = "09">09</option>
+         <option value = "10">10</option>
+         <option value = "11">11</option>
+         <option value = "12">12</option>
+       </select>
+     
+       <select name = 'Expiration Year' id='expYear'>
+         <option value = '2020'>2020</option>
+         <option value = '2021'>2021</option>
+         <option value = '2022'>2022</option>
+         <option value = '2023'>2023</option>
+         <option value = '2024'>2024</option>
+         <option value = '2025'>2025</option>
+         <option value = '2026'>2026</option>
+       </select>
+     
+       <div class="group">
+         <label>CVV*<br /></label>
+         <input spellcheck="false" id="cardCvv" type="text" maxlength="3" size="3" required>
+         <span class="highlight"></span>
+         <span class="bar"></span>
+       </div>
+       <button type="submit" id="submitButton" onclick="onClickSave();">Save Changes</button>
+     </form>
+     
+    
+    </form>
+  
+    <p>
+        Task Builder Page
+      </p>
+    
+      <header>
+        Product Details
+      </header>
+    
+    <form onsubmit="pdetails()">
+      <label>Category<br /></label>
+      <select name = 'Category' id='Category'>
+        <option value = "Jackets">Jackets</option>
+        <option value = 'Shirts'>Shirts</option>
+        <option value = 'Tops/Sweaters'>Tops/Sweaters</option>
+        <option value = 'Pants'>Pants</option>
+        <option value = 'Shorts'>Shorts</option>
+        <option value = 'Hats'>Hats</option>
+        <option value = 'Bags'>Bags</option>
+        <option value = 'Accessories'>Accessories</option>
+        <option value = 'Shoes'>Shoes</option>
+        <option value = 'Skate'>Skate</option>
+      </select>
+    
+      <div class="group">
+        <label>Key Words (3 Keywords Max)<br /></label>
+        <input spellcheck="false" id="name" type="text" required>
+        <span class="highlight"></span>
+        <span class="bar"></span>
+        <input spellcheck="false" id="name" type="text" required>
+        <span class="highlight"></span>
+        <span class="bar"></span>
+        <input spellcheck="false" id="name" type="text" required>
+        <span class="highlight"></span>
+        <span class="bar"></span>
+      </div>
+    
+      <div class="group">
+        <label>Color<br /></label> 
+        <input spellcheck="false" id="name" type="text" required>
+        <span class="highlight"></span>
+        <span class="bar"></span>
+      </div>
+    
+      <label>Size<br /></label>
+      <select name = 'Size' id='Size'>
+        <option value = "N/A">N/A</option>
+        <option value = "Random">Random</option>
+        <option value = 'Small'>Small</option>
+        <option value = 'Medium'>Medium</option>
+        <option value = 'Large'>Large</option>
+        <option value = 'XLarge'>XLarge</option>
+        <option value = '3'>3</option>
+        <option value = '3.5'>3.5</option>
+        <option value = '4'>4</option>
+        <option value = '4.5'>4.5</option>
+        <option value = '5'>5</option>
+        <option value = '5.5'>5.5</option>
+        <option value = '6'>6</option>
+        <option value = '6.5'>6.5</option>
+        <option value = '7'>7</option>
+        <option value = '7.5'>7.5</option>
+        <option value = '8'>8</option>
+        <option value = '8.5'>8.5</option>
+        <option value = '9'>9</option>
+        <option value = '9.5'>9.5</option>
+        <option value = '10'>10</option>
+        <option value = '10.5'>10.5</option>
+        <option value = '11'>11</option>
+        <option value = '11.5'>11.5</option>
+        <option value = '12'>12</option>
+        <option value = '12.5'>12.5</option>
+        <option value = '13'>13</option>
+        <option value = '13.5'>13.5</option>
+        <option value = '14'>14</option>
+        <option value = '14.5'>14.5</option>
+        <option value = '15'>15</option>
+        <option value = '15.5'>15.5</option>
+        <option value = '16'>16</option>
+        <option value = '16.5'>16.5</option>
+      </select>
+    
+      <label><br />Quantity<br /></label>
+      <select name = 'Quantity' id='Quantity'>
+        <option value = "1">1</option>
+        <option value = '2'>2</option>
+        <option value = '3'>3</option>
+        <option value = '4'>4</option>
+        <option value = '5'>5</option>
+        <option value = '6'>6</option>
+        <option value = '7'>7</option>
+        <option value = '8'>8</option>
+        <option value = '9'>9</option>
+        <option value = '10'>10</option>
+      </select>
+      <br />
+    </form>
+    
+    <header>
+    <br />
+    <br />
+    Task Settings
+    </header>
+    
+    <form onsubmit="tsettings()">
+      <label>Use Proxy (No for now)<br /></label>
+      <select name = 'ynproxy' id='ynproxy'>
+        <option value = "Yes">Yes</option>
+        <option value = "No">No</option>
+      </select>
+    
+      <br />
+      <label>Checkout Mode (only browser for now)<br /></label>
+      <select name = 'checkmode' id='checkmode'>
+        <option value = "Browser">Browser</option>
+        <option value = "Request">Request</option>
+      </select>
+    
+      <div class="group">
+        <label>Checkout Delay (ms)<br /></label> 
+        <input spellcheck="false" id="name" type="text" required>
+        <span class="highlight"></span>
+        <span class="bar"></span>
+      </div>
+    
+    </form>
+    <br />
+    <br />
+    <form onsubmit="bprofilechoice()">
+      <label>Billing Profile (Code not done)<br /></label>
+      <select name = 'bprofilechoice' id='bprofilechoice'>
+        <option value = "N/A">N/A</option>
+      </select>
+    <br />
+      <input type="submit" value="Create Task">
+    </form>
+
+
+  </body>
+</html>
