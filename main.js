@@ -1,13 +1,13 @@
 const { app, BrowserWindow } = require('electron');
-const { Menu } = require('electron')
-const ipcMain = require('electron').ipcMain
-const fs = require('fs')
-const os = require('os')
-const storage = require('electron-json-storage')
+const { Menu } = require('electron');
+const ipcMain = require('electron').ipcMain;
+const fs = require('fs');
+const os = require('os');
+const storage = require('electron-json-storage');
 const puppeteer = require('puppeteer-extra');
 const StealthPlugin = require('puppeteer-extra-plugin-stealth')();
 
-storage.setDataPath(os.tmpdir())
+storage.setDataPath(os.tmpdir());
 StealthPlugin.onBrowser = () => {};
 
 
@@ -90,6 +90,8 @@ function getWithExpiry(key) {
                     })
                 }else{
                     console.log(item.value)
+                    return item.value
+                    
                 }
             })
         }
@@ -154,8 +156,7 @@ function openHarvesterWindow(pageURL) {
         harvesterWindow.webContents.send("triggerCaptcha")
 
         ipcMain.on('captcha-done', async (event, token) => { 
-            setWithExpiry(token)
-            getWithExpiry('captcha') 
+            setWithExpiry(token) 
             console.log(token)
         })
         }
@@ -401,8 +402,9 @@ function openHarvesterWindow(pageURL) {
             page.waitFor(1000);
             setTimeout(() => {
                 const tokenpass = getWithExpiry('captcha')
+                //page.click('input.button').then(console.log('Clicked'));
+                page.evaluate(() => {document.getElementById("g-recaptcha-response").innerHTML = `${tokenpass}`})
                 page.click('input.button').then(console.log('Clicked'));
-                page.evaluate(document.getElementById("g-recaptcha-response").innerHTML = `${tokenpass}`)
             }, 750);
             
             page.waitForSelector('.failed', { visible:true })
