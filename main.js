@@ -111,7 +111,7 @@ function createWindow () {
     icon: image,
     })
     //Loads the GUI 
-    win.loadFile('task.html');
+    win.loadFile('home.html');
     //Removes navigation bar
     //win.removeMenu();
     //Open DevTools
@@ -400,9 +400,9 @@ function openHarvesterWindow(pageURL) {
             await page.click('#order_terms.checkbox');
             page.waitFor(1000);
             setTimeout(() => {
-                //const tokenpass = getWithExpiry()
+                const tokenpass = getWithExpiry('captcha')
                 page.click('input.button').then(console.log('Clicked'));
-                //page.evaluate(document.getElementById("g-recaptcha-response").innerHTML = `${tokenpass}`)
+                page.evaluate(document.getElementById("g-recaptcha-response").innerHTML = `${tokenpass}`)
             }, 750);
             
             page.waitForSelector('.failed', { visible:true })
