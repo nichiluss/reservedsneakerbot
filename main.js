@@ -7,7 +7,6 @@ const storage = require('electron-json-storage');
 const puppeteer = require('puppeteer-extra');
 const StealthPlugin = require('puppeteer-extra-plugin-stealth')();
 
-
 storage.setDataPath(os.tmpdir());
 StealthPlugin.onBrowser = () => {};
 
@@ -405,9 +404,10 @@ function openHarvesterWindow(pageURL) {
             //openHarvesterWindow('https://supremenewyork.com')
             setTimeout(async () => {
                 let tokenpass = await getWithExpiry('captcha')
-                await page.evaluate((tokenpass) => {document.getElementById("g-recaptcha-response").innerText = `${tokenpass}`}, tokenpass)
+                await page.evaluate((tokenpass) => {document.getElementById("g-recaptcha-response").value = `${tokenpass}`}, tokenpass)
+                //insert captcha submit
                 await page.click('input.button').then(console.log('Clicked'))
-                await page.evaluate((tokenpass) => {document.getElementById("g-recaptcha-response").innerText = `${tokenpass}`}, tokenpass)
+                
                 await page.waitFor(1000)
                 
                 
