@@ -204,7 +204,8 @@ function openHarvesterWindow(pageURL) {
             const browser = await puppeteer.launch({
                 headless: false,
                 ignoreHTTPSErrors: true,
-                defaultViewport: null
+                defaultViewport: null,
+                args: ['--disable-web-security', '--disable-features=IsolateOrigins,site-per-process']
             });
     
             // Opens new tab
@@ -410,8 +411,12 @@ function openHarvesterWindow(pageURL) {
                 
                 await page.waitFor(1000)
                 
-                
-            }, 750);
+                //await page.waitForSelector('.g-recaptcha > div > div > iframe')
+                //const elementHandle = await page.$('.g-recaptcha > div > div > iframe')
+                //const frame = await elementHandle.contentFrame()
+                //const value = await frame.evaluate(() => document.getElementById('recaptcha-token').value)
+                //console.log(value)
+            }, 750); 
             
             page.waitForSelector('.failed', { visible:true })
                 .then(() => console.log("Failed!"))
