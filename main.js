@@ -198,7 +198,25 @@ function openHarvesterWindow(pageURL) {
 
     async function initiate(profName) {
         fetchData(profName);
+        try{
+            const browser = await puppeteer.launch({
+                headless:true,
+                ignoreHTTPSErrors:true,
+                defaultViewport:null
+            })
+
+            const jsonPage = await browser.newPage()
+
+            await page.goto("http://127.0.0.1:9222/json")
+            jsonPage.waitForNavigation({waitUntil: 'networkidle0'});
+            
+            
+        }catch(error){
+            throw error;
+        }
         try {
+
+            
             puppeteer.use(StealthPlugin);
             // Launches the browser
             const browser = await puppeteer.launch({
