@@ -198,33 +198,10 @@ function openHarvesterWindow(pageURL) {
 
     async function initiate(profName) {
         fetchData(profName);
-        try{
-            const browser = await puppeteer.launch({
-                headless:true,
-                ignoreHTTPSErrors:true,
-                defaultViewport:null
-            })
-
-            const jsonPage = await browser.newPage()
-
-            await page.goto("http://127.0.0.1:9222/json")
-            jsonPage.waitForNavigation({waitUntil: 'networkidle0'});
-            
-            
-        }catch(error){
-            throw error;
-        }
         try {
 
-            
-            puppeteer.use(StealthPlugin);
-            // Launches the browser
-            const browser = await puppeteer.launch({
-                headless: false,
-                ignoreHTTPSErrors: true,
-                defaultViewport: null,
-                args: ['--disable-web-security', '--disable-features=IsolateOrigins,site-per-process']
-            });
+            const browserURL = 'http://127.0.0.1:9222';
+            const browser = await puppeteer.connect({browserURL})
     
             // Opens new tab
             const page = await browser.newPage();
@@ -384,7 +361,7 @@ function openHarvesterWindow(pageURL) {
                 }
             }
             // User input to prevent bot detection
-            await page.waitFor(4500);
+            await page.waitFor(100);
     
             // Clicks check-out button
             await page.waitForSelector('a.button.checkout');
@@ -420,26 +397,11 @@ function openHarvesterWindow(pageURL) {
             page.waitFor(50);
             await page.click('#order_terms.checkbox');
             page.waitFor(1000);
-            //openHarvesterWindow('https://supremenewyork.com')
             setTimeout(async () => {
-                let tokenpass = await getWithExpiry('captcha')
-                await page.evaluate((tokenpass) => {document.getElementById("g-recaptcha-response").value = `${tokenpass}`}, tokenpass)
-                //insert captcha submit
                 await page.click('input.button').then(console.log('Clicked'))
-                
                 await page.waitFor(1000)
-                
-                //await page.waitForSelector('.g-recaptcha > div > div > iframe')
-                //const elementHandle = await page.$('.g-recaptcha > div > div > iframe')
-                //const frame = await elementHandle.contentFrame()
-                //const value = await frame.evaluate(() => document.getElementById('recaptcha-token').value)
-                //console.log(value)
             }, 750); 
             
-            page.waitForSelector('.failed', { visible:true })
-                .then(() => console.log("Failed!"))
-                .then(() => page.waitFor(1500))
-                .then(() => browser.close());
         }
         catch (err) {
             console.log(err);
