@@ -24,12 +24,12 @@ let rawCard = ";"
 let expMonth = "";
 let expYear = "";
 let cvv = "";
-const itemType = "accessories";
+const itemType = "t-shirts";
 const itemSubType = "wear";
 const qty = "1";
-const itemSize = "L";
-const keyword1 = "Hanes";
-const keyword2 = "Tees";
+const itemSize = "XL";
+const keyword1 = "Motion";
+const keyword2 = "Purple";
 const nativeMenus = [
     {
         label: 'Harvester',
@@ -316,7 +316,7 @@ function openHarvesterWindow(pageURL) {
                     const option = (await page.$x('//*[@id = "s"]/option[text() = "XLarge"]'))[0];
                     const value = await (await option.getProperty('value')).jsonValue();
                     await page.select('select#s', value);
-                    await page.select('select#qty', qty);
+                    //await page.select('select#qty', qty);
                     await page.click('input.button');
                 }
             }
